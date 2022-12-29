@@ -1,0 +1,52 @@
+#+begin_src plantuml :file exa_microkernel.png
+    title EXA microkernel
+
+    node "window\nextendedmachine.com" {
+
+	  frame "Process" {
+
+	    component resmgr<<iframe>>
+	    component init<<iframe>>
+	    component netfs<<iframe>>
+	    component tmpfs<<iframe>>
+	    component bash<<iframe>>
+	    component tty<<iframe>>
+	    component logger<<iframe>>
+	}
+
+	  interface "Local Socket\n(Broadcast Channel API)" as API
+
+	    resmgr ..> API: use
+	    init ..> API: use
+	    netfs ..> API: use
+	    tmpfs ..> API: use
+	    bash ..> API: use
+	    tty ..> API: use
+	    logger ..> API: use
+
+	  frame "Bootloader" {
+
+	    component startup<<Script>>
+
+		  StartupInterface <-- startup
+
+	  }
+
+	  frame "Resource" {
+
+	    component "/dev/tty1"<<Terminal>>
+
+		  TtyInterface <-- "/dev/tty1"
+
+	  }
+
+	  resmgr ..> StartupInterface: use
+
+	  tty ..> TtyInterface: use
+  }
+
+#+end_src
+
+#+RESULTS:
+[[file:exa_microkernel.png]]
+

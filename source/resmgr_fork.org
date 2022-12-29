@@ -1,0 +1,74 @@
+#+begin_src plantuml :file resmgr_fork.png
+  title Fork by resmgr
+
+  skinparam BoxPadding 10
+
+  box resmgr process
+
+	  participant resmgr
+	  participant libc
+	  participant library_syscall
+	  participant Asyncify as async
+	  participant "BroadcastChannel\nchannel.1.<child_pid>.fork" as bc
+  end box
+
+  participant startup
+
+  box child process
+	  participant child
+	  participant "BroadcastChannel\nchannel.1.<child_pid>.fork" as child_bc
+	  participant Asyncify as child_async
+  end box
+
+  resmgr -> libc: fork()
+
+  activate libc
+
+  libc -> library_syscall: __syscall_fork()
+
+  activate library_syscall
+
+  library_syscall -> async: HandleSleep
+
+  async -> library_syscall: continue
+
+  library_syscall -> library_syscall: Generate\nchild pid
+
+  library_syscall -> bc: new
+
+  library_syscall -> startup: fork message (pid)
+
+  startup -> child: create iframe (pid)
+
+  child -> child_bc: new 
+
+  child -> bc: postMessage("continue_fork")
+
+  bc -> library_syscall
+
+  library_syscall -> child_bc: HEAP
+
+  library_syscall -> child_bc: Asyncify state
+
+  child -> bc: postMessage("end_fork")
+
+  bc -> library_syscall
+
+  library_syscall -> async: rewind
+
+  async --> library_syscall: child pid
+  library_syscall --> libc: child pid
+
+  deactivate library_syscall
+
+  libc --> resmgr: child pid
+
+  deactivate libc
+
+  child -> child_async: rewind
+
+#+End_src
+
+#+RESULTS:
+[[file:resmgr_fork.png]]
+
