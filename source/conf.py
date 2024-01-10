@@ -6,8 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'EXtended mAchine'
-copyright = '2022, Benoit Baudaux'
+project = 'exaequOS'
+copyright = '2024, Benoit Baudaux'
 author = 'Benoit Baudaux'
 
 # -- General configuration ---------------------------------------------------

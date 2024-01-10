@@ -3,15 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-EXtended mAchine
+exaequOS
 ============================================
 
-EXtended mAchine is a GNU/EXA distribution.
+This documentation will explain what is exaequOS, its origin, its purpose, its components and how to contribute to it.
 
 .. toctree::
 
    intro
+   start
    exa
+   dev
    :maxdepth: 2
    :caption: Contents:
 
