@@ -43,7 +43,7 @@ Installation
 Using git, you can clone the repository into your host machine. In order to use emcc or em++ compiler commands, you also need to install python3, nodejs, clang/llvm toolchain, binaryen, cmake. You can check the content of the Dockerfile for the full list of dependencies (see below).
 
 Dockerfile
-^^^^^^^^^
+^^^^^^^^^^
 
 The Dockerfile is accessible on `GitHub <https://github.com/baudaux/docker-exa>`_. It allows you to directly create a docker image on your host machine and to compile your apps in this docker.
 
@@ -53,7 +53,7 @@ emscripten-exa toolchain will generate (in your host machine) two files: <app na
 
 Local HTTP server
 ^^^^^^^^^^^^^^^^^
-An HTTP server shall run in your host machine in order to serve the application files (exa.html, <app name>.js and <app name>.wasm). Here is an example of file tree that allows exaequOS to find and execute your application:
+An HTTP server (port 7777) shall run in your host machine in order to serve the application files (exa.html, <app name>.js and <app name>.wasm). Here is an example of file tree that allows exaequOS to find and execute your application:
 
 ::
 
@@ -103,3 +103,55 @@ You need to replace "havoc.js" by the generated js file name.
 In order to execute the application, you need to open a terminal window and type (after $)::
 
   exaequos:~ $ /media/localhost/<app name>
+
+Publishing to the store
+-----------------------
+
+Register and connect to exaequos.com
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to publish an app on the store, you need to first signup and connect to the platform.
+
+.. image:: signup.png
+  :width: 800
+  :alt: signup
+
+
+exapkg
+^^^^^^
+
+Once connected, you have to change the current working directory to the app directory (/media/localhost/<app name> or /home/<app path>) and to start the command 'exapkg'::
+
+  exaequos:~ $ cd /media/localhost/<app name>
+  exaequos:/media/localhost/<app name> $ exapkg
+  
+The following window appears. You have to fill it and click on create. The app is then published on the store.
+
+.. image:: exapkg.png
+  :width: 800
+  :alt: exapkg
+
+exaequOS store
+^^^^^^^^^^^^^^
+
+The published app will be found in the following directory::
+  
+  /usr/store/<user name>/<package name>
+
+And will be found on hte store: 
+
+.. image:: exastore.png
+  :width: 800
+  :alt: exastore
+
+Link to your app
+^^^^^^^^^^^^^^^^
+
+You can then provide to others a direct link to your app::
+
+  https://exaequos.com/?a=@<user_name>/<package_name>
+
+or, more generally::
+  
+  https://exaequos.com/?a=/usr/store/<user_name>/<package_name>
+
