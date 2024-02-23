@@ -44,8 +44,42 @@ Using git, you can clone the repository into your host machine. In order to use 
 
 Dockerfile
 ^^^^^^^^^^
-
 The Dockerfile is accessible on `GitHub <https://github.com/baudaux/docker-exa>`_. It allows you to directly create a docker image on your host machine and to compile your apps in this docker.
+
+epm - exaequOS package manager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+It is a Python script located in emscripten-exa/third_party/epm. It allows to search, install and create packages.
+Example of command for searching a package provided by user exaequOS::
+
+   $ python3 epm.py search @exaequOS
+
+Output should look like this::
+
+  Search package @exaequos in exaequOS store
+  4 package(s) found
+
+  ncurses - 6.4.0 - ncurses library - by exaequOS
+  glfw - 3.4.0 - GLFW library - by exaequOS
+  exa-wayland - 0.0.1 - Wayland client library - by exaequOS
+  raylib - 5.0.0 - Raylib game engine - by exaequOS
+  ----------
+
+Example of command for installing packages::
+
+  $ python3 epm.py install exa-wayland glfw raylib
+
+Packages are installed in the directory: <current dir>/exapkgs/
+
+Command for listing the installed packages::
+  $ python3 epm.py list
+
+pkg-config
+^^^^^^^^^^
+You shall set the PKG_CONFIG_PATH with the directory containing the .pc files: <current dir>/exapkgs/pkconfigs
+
+example of command for compiling an app using glfw library::
+
+  $ emcc main.c `pkg-config --libs --cflags exa-wayland glfw` -o exa/test_glfw.js
 
 Running the compiled application
 --------------------------------
@@ -119,6 +153,7 @@ In order to publish an app on the store, you need to first signup and connect to
 
 exapkg
 ^^^^^^
+.. note:: Not applicable for app compiled on your host machine using emcc. Use epm in that case. See below
 
 Once connected, you have to change the current working directory to the app directory (/media/localhost/<app name> or /home/<app path>) and to start the command 'exapkg'::
 
@@ -130,6 +165,20 @@ The following window appears. You have to fill it and click on create. The app i
 .. image:: exapkg.png
   :width: 800
   :alt: exapkg
+
+epm
+^^^
+You can also publish (from your host machine) an app or a library using epm with the following command (launched in the root directory of the app or lib)::
+
+  $ python3 epm.py create
+
+The directory structure for a library shall look like::
+  
+   library root directory
+   ├── include
+   ├── lib
+   └── pkgconfig
+
 
 exaequOS store
 ^^^^^^^^^^^^^^
