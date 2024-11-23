@@ -1,0 +1,42 @@
+
+#+begin_src plantuml :file exa_process.png
+    title EXA process
+
+    node "iframe" {
+
+	  frame "WebAssembly" as WA {
+
+
+		  component "                     app                     " as app
+
+		  component "                 musl libc                 " as musl
+
+		  app -down[hidden]-> musl
+
+	}
+
+	frame "Javascript" as JS {
+
+		  
+
+	  component "               system calls              " as SC
+
+          component runtime
+
+
+      }
+
+      musl -down[hidden]-> SC
+  }
+
+  interface "W3C Broadcast Channel API" as BC
+
+  SC ..> BC: use
+
+  runtime ..> app: loads &\nstarts
+
+#+end_src
+
+#+RESULTS:
+[[file:exa_process.png]]
+

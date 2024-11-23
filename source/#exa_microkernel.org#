@@ -1,0 +1,53 @@
+#+begin_src plantuml :file exa_microkernel.png
+    title EXA microkernel
+
+    node "window\nexaequos.com" {
+
+	  frame "Process" {
+
+	    component resmgr<<iframe>>
+	    component init<<iframe>>
+	    component netfs<<iframe>>
+	    component pipe<<iframe>>
+	    component bash<<iframe>>
+	    component havoc<<iframe>>
+	    component tty<<iframe>>
+
+	}
+
+	  interface "Local Socket\n(Broadcast Channel API)" as API
+
+	    resmgr ..> API: use
+	    init ..> API: use
+	    netfs ..> API: use
+	    havoc ..> API: use
+	    bash ..> API: use
+	    tty ..> API: use
+	    pipe ..> API: use
+
+	  frame "Bootloader" {
+
+	    component startup<<Script>>
+
+		  StartupInterface <-- startup
+
+	  }
+
+	  frame "Resource" {
+
+	    component "/dev/tty1"<<Terminal>>
+
+		  TtyInterface <-- "/dev/tty1"
+
+	  }
+
+	  resmgr ..> StartupInterface: use
+
+	  tty ..> TtyInterface: use
+  }
+
+#+end_src
+
+#+RESULTS:
+[[file:exa_microkernel.png]]
+

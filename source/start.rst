@@ -47,4 +47,6 @@ It is possible to define an autostart application by specifying it in the url th
 For example::
   https://exaequos.com/?a=/usr/bin/vim
 
-  
+Import files in exaequOS
+------------------------
+Files stored on the host machine can be imported in the local file system of exaequOS by launching the **exio** command from the terminal (in the current directory).
